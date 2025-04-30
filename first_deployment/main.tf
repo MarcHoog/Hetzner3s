@@ -1,3 +1,12 @@
+terraform {
+  backend "s3" {
+    bucket = "mybucket"
+    key    = "path/to/my/key"
+    region = "us-east-1"
+  }
+}
+
+
 module "hetzner_server_storage_firewall" {
   source        = "../../modules/hetzner_server_storage_firewall"
   server_name   = "pilot-server-prod"

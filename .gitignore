@@ -9,7 +9,7 @@
 .terraform.lock.hcl
 
 # Terraform variable files (often contain sensitive data)
-*.tfvars
+*credentials.auto.tfvars
 *.tfvars.json
 
 # Crash log files
