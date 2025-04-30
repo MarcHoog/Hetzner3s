@@ -1,11 +1,4 @@
 terraform {
-  required_providers {
-    hcloud = {
-      source  = "hetznercloud/hcloud"
-      version = "~> 1.50.1"
-    }
-  }
-  required_version = ">= 1.6, < 2.0"
 
   backend "s3" {
     bucket  = "myterraform"
