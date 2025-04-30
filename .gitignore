@@ -1,0 +1,28 @@
+# Local Terraform directories (provider binaries, downloaded modules)
+.terraform/
+
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Dependency lock file (keep this out of .gitignore if you want reproducible builds)
+.terraform.lock.hcl
+
+# Terraform variable files (often contain sensitive data)
+*.tfvars
+*.tfvars.json
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Override and plan output files
+*.tfoverride
+*.tfplan
+
+# CLI configuration files
+.terraformrc
+terraform.rc
+
+# Environment variable definitions
+.envrc
