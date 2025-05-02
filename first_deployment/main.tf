@@ -1,11 +1,20 @@
 terraform {
 
+    required_version = ">= 1.5.0"
+    required_providers {
+      hcloud = {
+        source  = "hetznercloud/hcloud"
+        version = ">= 1.49.1"
+      }
+    }
+
+
   backend "s3" {
-    bucket  = "myterraform"
+    bucket  = "bucketofbuckets"
     key     = "first_deployment/state/state.tfstate"
-    region  = "hetzner"      
+    region  = "digitalocean"      
     endpoints = {
-      s3 = "https://nbg1.your-objectstorage.com"
+      s3 = "https://ams3.digitaloceanspaces.com"
     }
     # Common flags for compatibility:
     skip_credentials_validation = true   # this will skip AWS related validation
@@ -18,22 +27,13 @@ terraform {
   }
 }
 
-module "hetzner_server_storage_firewall" {
+module "hetzner_server" {
   
-  source        = "git::ssh://git@github.com/MarcHoog/MyTerraformModules.git//modules/hetzner/app_S1vF?ref=main"
-  
-  server_name   = "pilot-server-prod"
+  source        = "git::ssh://git@github.com/MarcHoog/MyTerraformModules.git//modules/hetzner/server?ref=main"
   image         = "ubuntu-22.04"         # Use a valid image slug for Hetzner Cloud
-  server_type   = "cx31"
+  server_type   = "cx22"
   location      = "nbg1"                 # Example location; adjust as needed
-  ssh_keys      = ["my-ssh-key"]         # Replace with your registered SSH key names
-
-  volume_name   = "pilot-volume"
-  volume_size   = 20                     # Volume size in GB
-
-  firewall_name = "pilot-firewall"
-  firewall_description = "Firewall for pilot Hetzner project"
-  firewall_in_protocol  = "tcp"
-  firewall_in_port      = "80"
-  firewall_in_source_ips = ["0.0.0.0/0"]
+  nodes         = 1
+  ipv6_enabled  = true
+  ssh_key_path  = "~/.ssh/id_rsa.pub"         # Path 
 }
