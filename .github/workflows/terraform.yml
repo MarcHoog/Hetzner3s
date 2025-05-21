@@ -31,6 +31,24 @@ jobs:
               with:
                 terraform_version:  ${{ env.TF_VERSION }}
             
+            - name: Terraform Init 
+              env:
+                AWS_ACCESS_KEY_ID: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
+                AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
+                HETZNER_TOKEN: ${{ secrets.TF_HETZNER_TOKEN }}
+              run: |
+                terraform init -input=false \
+                    -backend-config="bucket=bucketofbuckets" \
+                    -backend-config="key=first_deployment/state/state.tfstate" \
+                    -backend-config="region=digitalocean" \
+                    -backend-config="endpoint=https://ams3.digitaloceanspaces.com" \
+                    -backend-config="skip_credentials_validation=true" \
+                    -backend-config="skip_metadata_api_check=true" \
+                    -backend-config="skip_region_validation=true" \
+                    -backend-config="skip_requesting_account_id=true" \
+                    -backend-config="use_path_style=true" \
+                    -backend-config="skip_s3_checksum=true"
+
             - name: Terraform Format Check
               run: terraform fmt -check -recursive -diff    
               
