@@ -29,7 +29,7 @@ terraform {
 
 module "hetzner_server" {
 
-  source = "git::https://github.com/MarcHoog/MyTerraformModules.git?ref=main"
+  source       = "git::https://github.com/MarcHoog/MyTerraformModules.git?ref=main"
   server_names = ["dingdong"]
   image        = "ubuntu-22.04" # Use a valid image slug for Hetzner Cloud
   server_type  = "cx22"
