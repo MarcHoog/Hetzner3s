@@ -14,9 +14,6 @@ permissions:
 
 env:
   TF_VERSION: 1.11.4                            
-  TF_DATA_DIR: ${{ github.workspace }}/.terraform/data
-  TF_PLUGIN_CACHE_DIR: ${{ github.workspace }}/.terraform/plugin-cache
-
 
 jobs:
     terraform-plan:
