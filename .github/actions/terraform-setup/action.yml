@@ -20,9 +20,6 @@ runs:
         git config --global url."https://x-access-token:${{ inputs.github_token_pat }}@github.com/".insteadOf "https://github.com/"
       shell: bash
 
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
       with:

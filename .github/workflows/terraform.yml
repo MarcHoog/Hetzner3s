@@ -24,6 +24,9 @@ jobs:
                 working-directory: ./first_deployment
         steps:
 
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
             - name: Terraform Setup
               uses: ./.github/actions/terraform-setup
               with:
