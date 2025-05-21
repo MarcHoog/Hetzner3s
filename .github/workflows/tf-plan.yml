@@ -34,8 +34,6 @@ jobs:
 
             - name: Terraform Plan
               id: plan
-              env: 
-                HETZNER_TOKEN: ${{ secrets.TF_HETZNER_TOKEN }}
               run: |
                 terraform plan -no-color -out=tfplan > plan.out
 
