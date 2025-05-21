@@ -1,0 +1,83 @@
+name: 'Terraform Deployment'
+on:
+    pull_request: 
+        branches:
+            - main
+        types: [opened, synchronize, reopened]   
+    push:
+        branches:
+            - main
+
+permissions:
+  contents: read                               
+  pull-requests: write                          
+
+env:
+  TF_VERSION: 1.11.4                            
+  TF_DATA_DIR: ${{ github.workspace }}/.terraform/data
+  TF_PLUGIN_CACHE_DIR: ${{ github.workspace }}/.terraform/plugin-cache
+
+
+jobs:
+    terraform-plan:
+        if: ${{ github.event_name == 'pull_request' && github.base_ref == 'main' }}
+        runs-on: ubuntu-latest
+        defaults: 
+            run: 
+                working-directory: ./first_deployment
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Setup Terraform
+              uses: hashicorp/setup-terraform@v2
+              with:
+                terraform_version:  ${{ env.TF_VERSION }}
+            
+            - name: Terraform Format Check
+              run: terraform fmt -check -recursive
+            
+            - name: Terraform Validate
+              run: terraform validate -no-color
+                
+            - name: Terraform Init 
+              env:
+                AWS_ACCESS_KEY_ID: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
+                AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
+                AWS_REGION: ${{ secrets.TF_AWS_REGION }}
+                HETZNER_TOKEN: ${{ secrets.TF_HETZNER_TOKEN }}
+              run: |
+                terraform init -input=false \
+                    -backend-config="bucket=bucketofbuckets" \
+                    -backend-config="key=first_deployment/state/state.tfstate" \
+                    -backend-config="region=digitalocean" \
+                    -backend-config="endpoint=https://ams3.digitaloceanspaces.com" \
+                    -backend-config="skip_credentials_validation=true" \
+                    -backend-config="skip_metadata_api_check=true" \
+                    -backend-config="skip_region_validation=true" \
+                    -backend-config="skip_requesting_account_id=true" \
+                    -backend-config="use_path_style=true" \
+                    -backend-config="skip_s3_checksum=true"
+
+
+            - name: Terraform Plan
+              id: plan
+              env: 
+                HETZNER_TOKEN: ${{ secrets.TF_HETZNER_TOKEN }}
+              run: |
+                terraform plan -no-color -out=tfplan > plan.out
+
+            - name: Comment Terraform Plan on PR
+              uses: actions/github-scripts@v7
+              with:
+                github-token: ${{ secrets.GITHUB_TOKEN}}
+                script: |
+                    const fs = require('fs');
+                    const plan = fs.redFileSync('plan.out', 'utf8')
+                    github.rest.issues.createComment({
+                        issue_number: context.issue.number,
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        body: `\`\`\`terraform\n${plan}\n\`\`\``
+                        })
+                        

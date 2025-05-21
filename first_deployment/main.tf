@@ -30,10 +30,10 @@ terraform {
 module "hetzner_server" {
   
   source        = "git::ssh://git@github.com/MarcHoog/MyTerraformModules.git//modules/hetzner/server?ref=main"
+  server_names  = ["dingdong"]
   image         = "ubuntu-22.04"         # Use a valid image slug for Hetzner Cloud
   server_type   = "cx22"
   location      = "nbg1"                 # Example location; adjust as needed
   nodes         = 1
   ipv6_enabled  = true
-  ssh_key_path  = "~/.ssh/id_rsa.pub"         # Path 
 }
