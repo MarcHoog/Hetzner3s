@@ -53,6 +53,6 @@ jobs:
                         issue_number: context.issue.number,
                         owner: context.repo.owner,
                         repo: context.repo.repo,
-                        body: `\`\`\`terraform\n${plan}\n\`\`\``
+                        body: "Hoi Ik ben Marc"
                         })
                         
