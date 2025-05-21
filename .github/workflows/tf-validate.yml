@@ -1,0 +1,38 @@
+name: 'Terraform Deployment'
+on:
+  push:
+      branches:
+          - '**'
+            
+permissions:
+  contents: read                               
+  pull-requests: write                          
+
+env:
+  TF_VERSION: 1.11.4                            
+
+jobs:
+    terraform-validate:
+        runs-on: ubuntu-latest
+        defaults:
+            run: 
+                working-directory: ./first_deployment
+        steps:
+
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Terraform Setup
+              uses: ./.github/actions/terraform-setup
+              with:
+                tf_version: ${{ env.TF_VERSION }}
+                github_token_pat: ${{ secrets.TF_GITHUB_TOKEN_PAT }}
+                aws_access_key_id: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
+                aws_secret_access_key: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
+                hetzner_token: ${{ secrets.TF_HETZNER_TOKEN }}
+
+            - name: Terraform Format Check
+              run: terraform fmt -check -recursive -diff    
+              
+            - name: Terraform Validate
+              run: terraform validate -no-color
