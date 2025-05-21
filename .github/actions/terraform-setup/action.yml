@@ -9,8 +9,6 @@ inputs:
     required: true
   aws_secret_access_key:
     required: true
-  hetzner_token:
-    required: true
   working_directory:
     required: false
     default: ./terraform    
@@ -32,7 +30,6 @@ runs:
       env:
         AWS_ACCESS_KEY_ID: ${{ inputs.aws_access_key_id }}
         AWS_SECRET_ACCESS_KEY: ${{ inputs.aws_secret_access_key }}
-        HETZNER_TOKEN: ${{ inputs.hetzner_token }}
       run: |
         terraform init -input=false \
           -backend-config="bucket=bucketofbuckets" \
