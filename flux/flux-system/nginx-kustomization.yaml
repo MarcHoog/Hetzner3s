@@ -1,13 +1,15 @@
+# flux/flux-system/nginx-kustomization.yaml
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
 metadata:
   name: nginx
   namespace: flux-system
 spec:
-  interval: 5m
-  path: "./apps/nginx"
-  prune: true
+  interval: 5m                            # how often to reconcile
+  path: "./apps/nginx"                    # relative to your repo root
+  prune: true                             # garbage-collect removed resources
   sourceRef:
     kind: GitRepository
-    name: flux-system
-  validation: client
+    name: flux-system                     # matches the GitRepository created by bootstrap
+  validation: client                      # or "strict"
+  targetNamespace: default                # where your nginx resources live
