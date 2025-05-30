@@ -16,8 +16,8 @@ terraform {
 module "hetzner_server" {
 
   source       = "git::https://github.com/MarcHoog/MyTerraformModules.git//modules/hetzner/server?ref=main"
-  server_names = ["dingdong"]
-  image        = "ubuntu-22.04" # Use a valid image slug for Hetzner Cloud
+  server_names = ["MyK3s"]
+  image        = "Ubuntu-22.04 x86 k3s Single Node" # Use a valid image slug for Hetzner Cloud
   server_type  = "cx22"
   location     = "nbg1" # Example location; adjust as needed
   nodes        = 1
