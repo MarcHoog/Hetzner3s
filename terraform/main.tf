@@ -13,7 +13,7 @@ terraform {
   }
 }
 
-module "hetzner_server" {
+module "singleNodeK3s" {
 
   source       = "git::https://github.com/MarcHoog/MyTerraformModules.git//modules/hetzner/server?ref=main"
   server_names = ["MyK3s"]
@@ -24,3 +24,26 @@ module "hetzner_server" {
   ssh_keys     = ["bubble"]
   ipv4_enabled = true
 }
+
+#module "MasterNodesK3s" {
+#  source       = "git::https://github.com/MarcHoog/MyTerraformModules.git//modules/hetzner/server?ref=main"
+#  server_names = ["MyK3s"]
+#  image        = "241168872"
+#  server_type  = "cx22"
+#  location     = "nbg1" # Example location; adjust as needed
+#  nodes        = 1
+#  ssh_keys     = ["bubble"]
+#  ipv4_enabled = true
+#}
+
+
+#module "AgentNodesK3s" {
+#  source       = "git::https://github.com/MarcHoog/MyTerraformModules.git//modules/hetzner/server?ref=main"
+# server_names = ["MyK3s"]
+#  image        = "241168872"
+#  server_type  = "cx22"
+#  location     = "nbg1" # Example location; adjust as needed
+#  nodes        = 1
+#  ssh_keys     = ["bubble"]
+#  ipv4_enabled = true
+#}
