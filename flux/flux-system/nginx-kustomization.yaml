@@ -8,7 +8,4 @@ spec:
   interval: 5m                            # how often to reconcile
   path: "flux/apps/nginx"                    # relative to your repo root
   prune: true                             # garbage-collect removed resources
-  sourceRef:
-    kind: GitRepository
-    name: flux-system                     # matches the GitRepository created by bootstrap
   targetNamespace: default                # where your nginx resources live
