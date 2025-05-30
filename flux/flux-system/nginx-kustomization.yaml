@@ -11,5 +11,4 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system                     # matches the GitRepository created by bootstrap
-  validation: client                      # or "strict"
   targetNamespace: default                # where your nginx resources live
