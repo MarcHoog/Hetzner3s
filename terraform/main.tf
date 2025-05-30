@@ -17,10 +17,10 @@ module "hetzner_server" {
 
   source       = "git::https://github.com/MarcHoog/MyTerraformModules.git//modules/hetzner/server?ref=main"
   server_names = ["MyK3s"]
-  image        = "241167343"
+  image        = "241168872"
   server_type  = "cx22"
   location     = "nbg1" # Example location; adjust as needed
   nodes        = 1
   ssh_keys     = ["bubble"]
-  ipv6_enabled = true
+  ipv4_enabled = true
 }
