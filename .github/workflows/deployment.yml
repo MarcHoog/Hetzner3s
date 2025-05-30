@@ -53,6 +53,12 @@ jobs:
               aws_access_key_id: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
               aws_secret_access_key: ${{ secrets.TF_AWS_SECRET_ACCESS_KEY }}
 
+          - name: Install Hcloud
+            run: |
+              curl -sSL https://github.com/hetznercloud/cli/releases/latest/download/hcloud-linux-amd64.tar.gz | tar -xz
+              sudo mv hcloud /usr/local/bin/hcloud
+              hcloud version
+          
           - name: Apply
             env:
               AWS_ACCESS_KEY_ID: ${{ secrets.TF_AWS_ACCES_KEY_ID }}
