@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m                            # how often to reconcile
-  path: "./apps/nginx"                    # relative to your repo root
+  path: "flux/apps/nginx"                    # relative to your repo root
   prune: true                             # garbage-collect removed resources
   sourceRef:
     kind: GitRepository
