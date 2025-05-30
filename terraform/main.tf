@@ -17,7 +17,7 @@ module "hetzner_server" {
 
   source       = "git::https://github.com/MarcHoog/MyTerraformModules.git//modules/hetzner/server?ref=main"
   server_names = ["MyK3s"]
-  image        = "Ubuntu-22.04 x86 k3s Single Node" # Use a valid image slug for Hetzner Cloud
+  image        = "Ubuntu-22.04 | k3s"
   server_type  = "cx22"
   location     = "nbg1" # Example location; adjust as needed
   nodes        = 1
