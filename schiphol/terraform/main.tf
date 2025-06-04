@@ -9,26 +9,28 @@ terraform {
   }
 
 
-  backend "s3" {
+  backend  "s3" {
   }
 }
 
 module "singleNodeK3s" {
-
   source       = "git::https://github.com/MarcHoog/MyTerraformModules.git//modules/hetzner/server?ref=main"
-  server_names = ["MyK3s"]
-  image        = "241168872"
+  server_name = "boeing747"
+  image        = "ubuntu-24.04"
   server_type  = "cx22"
   location     = "nbg1" # Example location; adjust as needed
-  nodes        = 1
-  ssh_keys     = ["bubble"]
+  ssh_keys     = ["bubble", "ansible"]
   ipv4_enabled = true
+  labels = {
+    "k3s": "controller"
+    "arch": "x86"
+  }
 }
 
 #module "MasterNodesK3s" {
 #  source       = "git::https://github.com/MarcHoog/MyTerraformModules.git//modules/hetzner/server?ref=main"
 #  server_names = ["MyK3s"]
-#  image        = "241168872"
+#  image        = "Ubuntu22.04"
 #  server_type  = "cx22"
 #  location     = "nbg1" # Example location; adjust as needed
 #  nodes        = 1
@@ -40,7 +42,7 @@ module "singleNodeK3s" {
 #module "AgentNodesK3s" {
 #  source       = "git::https://github.com/MarcHoog/MyTerraformModules.git//modules/hetzner/server?ref=main"
 # server_names = ["MyK3s"]
-#  image        = "241168872"
+#  image        = "Ubuntu22.04"
 #  server_type  = "cx22"
 #  location     = "nbg1" # Example location; adjust as needed
 #  nodes        = 1
